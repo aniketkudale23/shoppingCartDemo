@@ -1,13 +1,7 @@
 package com.example.shopping.shoppingCart.controller;
 
-import com.example.shopping.shoppingCart.daorepointerface.DaoCategory;
-import com.example.shopping.shoppingCart.daorepointerface.DaoLogin;
-import com.example.shopping.shoppingCart.daorepointerface.DaoProduct;
-import com.example.shopping.shoppingCart.daorepointerface.DaoRegister;
-import com.example.shopping.shoppingCart.entity.Category;
-import com.example.shopping.shoppingCart.entity.Login;
-import com.example.shopping.shoppingCart.entity.Product;
-import com.example.shopping.shoppingCart.entity.Register;
+import com.example.shopping.shoppingCart.daorepointerface.*;
+import com.example.shopping.shoppingCart.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
@@ -35,6 +29,8 @@ public class RegistrationController {
     DaoProduct daoProduct;
     @Autowired
     HttpSession session;
+    @Autowired
+    ProductReviewRepo productReviewRepo;
 
 
     @PostMapping("/register")
@@ -123,11 +119,30 @@ public class RegistrationController {
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
     }
 
+    @PostMapping("/showComments")
+    public ResponseEntity<List<ProductReview>> showComments(@RequestParam String productName)
+    {
+        ProductReview reviews =  productReviewRepo.findByProductName(productName);
+        return new ResponseEntity<List<ProductReview>>((List<ProductReview>) reviews, HttpStatus.OK);
+    }
+
+    @PostMapping("/addComments")
+    public String addComment(@RequestParam Integer productId, @RequestParam String comment)
+    {
+
+        if (daoProduct.existByProductId(productId)) {
+            System.out.println("Product id is "+ productId );
+            ProductReview review = new ProductReview(productId, comment);
+            productReviewRepo.save(review);
+            return "success";
+        }else
+            return "product not available";
+
+    }
+
     private Sort sortByIdAsc()
     {
         return new Sort(Sort.Direction.ASC, "productId");
 
     }
 }
-
-

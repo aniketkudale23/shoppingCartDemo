@@ -9,7 +9,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer productId;
-    String productName;
+   public String productName;
     Float price;
     Integer qty;
     String image;

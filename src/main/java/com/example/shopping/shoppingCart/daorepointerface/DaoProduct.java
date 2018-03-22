@@ -14,7 +14,9 @@ public interface DaoProduct extends JpaRepository<Product,Integer> {
     @Transactional
     @Query("select count(*) > 0 from Product where productName = ?1")
     boolean existByProductName(String productName);
-
+    @Transactional
+    @Query("select count(*) > 0 from Product where productId = ?1")
+    boolean existByProductId(Integer id);
     @Override
    // @Query("select productId, productName, price, qty, image from Product")
     List<Product> findAll();

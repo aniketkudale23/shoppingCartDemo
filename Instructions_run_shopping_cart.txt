@@ -1,0 +1,26 @@
+install instructions for Shopping Project :-
+
+Download Ui 
+
+https://github.com/aniketkudale23/Ui-shoppingCart.git
+go to Ui-shoppingCart
+npm install
+ng serve
+
+mysql 
+
+brew install mysql
+mysql.server start
+mysql -uroot
+create database shopping;
+ALTER USER root@'localhost' IDENTIFIED WITH mysql_native_password BY ''; //disable password caching requied to connect using spring
+mysql -u root -p shopping < shopping_db_backup.sql.  //add data
+
+
+
+Download Backend
+
+https://github.com/aniketkudale23/shoppingCartDemo.git
+
+mvn clean install;
+run project;

@@ -59,10 +59,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -81,6 +78,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>shopping-cart-demo</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

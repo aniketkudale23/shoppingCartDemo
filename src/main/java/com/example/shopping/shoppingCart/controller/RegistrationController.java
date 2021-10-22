@@ -1,17 +1,31 @@
 package com.example.shopping.shoppingCart.controller;
 
-import com.example.shopping.shoppingCart.daorepointerface.*;
-import com.example.shopping.shoppingCart.entity.*;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import com.example.shopping.shoppingCart.daorepointerface.DaoCategory;
+import com.example.shopping.shoppingCart.daorepointerface.DaoLogin;
+import com.example.shopping.shoppingCart.daorepointerface.DaoProduct;
+import com.example.shopping.shoppingCart.daorepointerface.DaoRegister;
+import com.example.shopping.shoppingCart.entity.Category;
+import com.example.shopping.shoppingCart.entity.Login;
+import com.example.shopping.shoppingCart.entity.Product;
+import com.example.shopping.shoppingCart.entity.Register;
 
 @Controller
 @ResponseBody
@@ -29,8 +43,7 @@ public class RegistrationController {
     DaoProduct daoProduct;
     @Autowired
     HttpSession session;
-    @Autowired
-    ProductReviewRepo productReviewRepo;
+   
 
 
     @PostMapping("/register")
@@ -119,26 +132,9 @@ public class RegistrationController {
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
     }
 
-    @PostMapping("/showComments")
-    public ResponseEntity<List<ProductReview>> showComments(@RequestParam String productName)
-    {
-        ProductReview reviews =  productReviewRepo.findByProductName(productName);
-        return new ResponseEntity<List<ProductReview>>((List<ProductReview>) reviews, HttpStatus.OK);
-    }
+  
 
-    @PostMapping("/addComments")
-    public String addComment(@RequestParam Integer productId, @RequestParam String comment)
-    {
-
-        if (daoProduct.existByProductId(productId)) {
-            System.out.println("Product id is "+ productId );
-            ProductReview review = new ProductReview(productId, comment);
-            productReviewRepo.save(review);
-            return "success";
-        }else
-            return "product not available";
-
-    }
+ 
 
     private Sort sortByIdAsc()
     {

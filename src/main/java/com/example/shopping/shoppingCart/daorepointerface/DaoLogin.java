@@ -10,7 +10,7 @@ public interface DaoLogin extends JpaRepository<Login,Integer> {
     @Override
      Login save(Login login);
 
-    @Override
+
     boolean exists(Integer integer);
     @Transactional
     @Query("select count(email) > 0 from Login where email = ?1  AND password = ?2")

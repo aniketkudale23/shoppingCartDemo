@@ -13,7 +13,7 @@ public interface DaoRegister extends JpaRepository<Register,Integer> {
 //   @Query(nativeQuery = true, value = "select count(register_id) > 0  from register where register_id =  ?")
 //   boolean checkForId(Integer id);
 
-    @Override
+
     boolean exists(Integer register_id);
 //    @Query("select count(email) > 0 from Register where email = ?")
 //    boolean findByEmail(String email);

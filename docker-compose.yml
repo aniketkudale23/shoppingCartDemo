@@ -14,26 +14,28 @@ services:
     ports:
     - "8080:8080"
     restart: always
-    depends_on: # Start the depends_on first
-    - mysql
+    depends_on:
+    - mysql_db
+    links:
+    - mysql_db:app_db
     environment:
-      RDS_HOSTNAME: mysql
+      RDS_HOSTNAME: app_db
       RDS_PORT: 3306
       RDS_DB_NAME: shopping
-      RDS_USERNAME: todos-user
-      RDS_PASSWORD: dummytodos
+      RDS_USERNAME: root
+      RDS_PASSWORD: root
     networks:
     - shopping-web-application-network
 
-  mysql:
-    image: mysql:8.0.25
+  mysql_db:
+    image: "mysql:8.0"
     ports:
     - "3306:3306"
     restart: always
     environment:
-      MYSQL_USER: todos-user
-      MYSQL_PASSWORD: dummytodos
+      MYSQL_PASSWORD: root
       MYSQL_DATABASE: shopping
+      MYSQL_ROOT_PASSWORD: root
     volumes:
     - ./mysql-dump:/docker-entrypoint-initdb.d
     networks:
